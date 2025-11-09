@@ -1,70 +1,73 @@
 ﻿using System;
 using System.Linq;
 
-public class Solution
+namespace CSharp_Practice
 {
-    public int RemoveDuplicates(int[] nums)
+    public class Solution
     {
-        int size = nums.Length;  // Размер исходного массива
-        if (size == 0) return 0;  // Если массив пуст, возвращаем 0
+        public int RemoveDuplicates(int[] nums)
+        {
+            int size = nums.Length;  // Размер исходного массива
+            if (size == 0) return 0;  // Если массив пуст, возвращаем 0
 
-        int[] newArr = new int[size];  // Новый массив для уникальных элементов
-        int k = 0;  // Индекс для записи уникальных элементов в новый массив
+            int[] newArr = new int[size];  // Новый массив для уникальных элементов
+            int k = 0;  // Индекс для записи уникальных элементов в новый массив
 
-        for (int i = 0; i < nums.Length; i++)
-        {  // Проходим по всем элементам массива nums
-            bool isDuplicate = false;  // Флаг для проверки на дубликаты
+            for (int i = 0; i < nums.Length; i++)
+            {  // Проходим по всем элементам массива nums
+                bool isDuplicate = false;  // Флаг для проверки на дубликаты
 
-            // Проходим по уже найденным уникальным элементам
-            for (int j = 0; j < k; j++)
-            {  // Проверяем каждый новый элемент на дубликаты
-                if (nums[i] == newArr[j])
-                {  // Если текущий элемент уже есть в newArr
-                    isDuplicate = true;  // Помечаем его как дубликат
-                    break;  // Прерываем цикл
+                // Проходим по уже найденным уникальным элементам
+                for (int j = 0; j < k; j++)
+                {  // Проверяем каждый новый элемент на дубликаты
+                    if (nums[i] == newArr[j])
+                    {  // Если текущий элемент уже есть в newArr
+                        isDuplicate = true;  // Помечаем его как дубликат
+                        break;  // Прерываем цикл
+                    }
+                }
+
+                // Если элемента нет среди уникальных, добавляем его
+                if (!isDuplicate)
+                {
+                    newArr[k] = nums[i];  // Записываем уникальный элемент в newArr
+                    k++;  // Увеличиваем индекс для следующего уникального элемента
                 }
             }
 
-            // Если элемента нет среди уникальных, добавляем его
-            if (!isDuplicate)
-            {
-                newArr[k] = nums[i];  // Записываем уникальный элемент в newArr
-                k++;  // Увеличиваем индекс для следующего уникального элемента
+            // Копируем уникальные элементы обратно в nums
+            for (int i = 0; i < k; i++)
+            {  // Копируем элементы из newArr обратно в nums
+                nums[i] = newArr[i];
             }
-        }
 
-        // Копируем уникальные элементы обратно в nums
-        for (int i = 0; i < k; i++)
-        {  // Копируем элементы из newArr обратно в nums
-            nums[i] = newArr[i];
+            return k;  // Возвращаем количество уникальных элементов
         }
-
-        return k;  // Возвращаем количество уникальных элементов
     }
-}
 
-public class Program
-{
-    public static void Main(string[] args)
+    public class Program
     {
-        // Тестируем метод с примером
-        Solution solution = new Solution();
+        public static void Main(string[] args)
+        {
+            // Тестируем метод с примером
+            Solution solution = new Solution();
 
-        // Исходный массив
-        int[] nums = new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4 };
+            // Исходный массив
+            int[] nums = new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4 };
 
-        // Выводим исходный массив
-        Console.WriteLine("Исходный массив:");
-        Console.WriteLine(string.Join(", ", nums));
+            // Выводим исходный массив
+            Console.WriteLine("Исходный массив:");
+            Console.WriteLine(string.Join(", ", nums));
 
-        // Вызываем метод для удаления дубликатов
-        int k = solution.RemoveDuplicates(nums);
+            // Вызываем метод для удаления дубликатов
+            int k = solution.RemoveDuplicates(nums);
 
-        // Выводим результаты
-        Console.WriteLine("\nМассив после удаления дубликатов:");
-        Console.WriteLine(string.Join(", ", nums.Take(k)));  // Выводим только уникальные элементы
+            // Выводим результаты
+            Console.WriteLine("\nМассив после удаления дубликатов:");
+            Console.WriteLine(string.Join(", ", nums.Take(k)));  // Выводим только уникальные элементы
 
-        Console.WriteLine("\nКоличество уникальных элементов: " + k);
+            Console.WriteLine("\nКоличество уникальных элементов: " + k);
+        }
     }
 }
 
